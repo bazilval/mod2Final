@@ -4,19 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:mod2Final"
+        xmlns:vm="clr-namespace:mod2Final.ViewModels"
         mc:Ignorable="d"
         Title="Калькулятор" Height="400" Width="300" MinHeight="400" MinWidth="300"
         Icon="../Data/icon.ico">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid Background="#FF1F1F1F">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="35*"/>
             <RowDefinition Height="145*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="123 + 456 =" Style="{StaticResource OperationBox}"/>
+        <TextBlock Grid.Row="0" Style="{StaticResource OperationBox}"/>
         <TextBox Grid.Row="1" Text="0" Style="{StaticResource NumBox}"/>
         <UniformGrid Grid.Row="2" Columns="4" Rows="5" Margin="2">
-            <Button Content="CE" Style="{StaticResource OperationButton}"/>
+            <Button Content="CE" 
+                    Style="{StaticResource OperationButton}"
+                    Command="{Binding Path=ClearEntityButton}"/>
             <Button Content="C" Style="{StaticResource OperationButton}"/>
             <Button Content="←" Style="{StaticResource OperationButton}"/>
             <Button Content="÷" Style="{StaticResource OperationButton}"/>
