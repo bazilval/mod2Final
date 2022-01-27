@@ -43,5 +43,10 @@ namespace mod2Final.Model
         {
             throw new NotImplementedException();
         }
+
+        internal static void InputSymbol(string num)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

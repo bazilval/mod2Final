@@ -17,35 +17,75 @@
             <RowDefinition Height="35*"/>
             <RowDefinition Height="145*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource OperationBox}"/>
-        <TextBox Grid.Row="1" Text="0" Style="{StaticResource NumBox}"/>
+        <TextBlock Text="{Binding Path=OperationField}"
+                   Grid.Row="0" 
+                   Style="{StaticResource OperationBox}"/>
+        <TextBox Text="{Binding Path=Field}"
+                 Grid.Row="1" 
+                 Style="{StaticResource NumBox}"/>
         <UniformGrid Grid.Row="2" Columns="4" Rows="5" Margin="2">
             <Button Content="CE" 
                     Style="{StaticResource OperationButton}"
-                    Command="{Binding Path=ClearEntityButton}"/>
-            <Button Content="C" Style="{StaticResource OperationButton}"/>
-            <Button Content="←" Style="{StaticResource OperationButton}"/>
-            <Button Content="÷" Style="{StaticResource OperationButton}"/>
+                    Command="{Binding Path=CleanEntryButton}"/>
+            <Button Content="C" 
+                    Style="{StaticResource OperationButton}"
+                    Command="{Binding Path=ClearButton}"/>
+            <Button Content="←" 
+                    Style="{StaticResource OperationButton}"
+                    Command="{Binding Path=BackspaceButton}"/>
+            <Button Content="÷" 
+                    Style="{StaticResource OperationButton}"
+                    Command="{Binding Path=DivideButton}"/>
 
-            <Button Content="7" Style="{StaticResource NumButton}"/>
-            <Button Content="8" Style="{StaticResource NumButton}"/>
-            <Button Content="9" Style="{StaticResource NumButton}"/>
-            <Button Content="X" Style="{StaticResource OperationButton}"/>
+            <Button Content="7" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=SevenButton}"/>
+            <Button Content="8" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=EightButton}"/>
+            <Button Content="9" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=NineButton}"/>
+            <Button Content="X" 
+                    Style="{StaticResource OperationButton}"
+                    Command="{Binding Path=MultiplyButton}"/>
 
-            <Button Content="4" Style="{StaticResource NumButton}"/>
-            <Button Content="5" Style="{StaticResource NumButton}"/>
-            <Button Content="6" Style="{StaticResource NumButton}"/>
-            <Button Content="–" Style="{StaticResource OperationButton}"/>
+            <Button Content="4" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=FourButton}"/>
+            <Button Content="5" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=FiveButton}"/>
+            <Button Content="6" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=SixButton}"/>
+            <Button Content="–" 
+                    Style="{StaticResource OperationButton}"/>
 
-            <Button Content="1" Style="{StaticResource NumButton}"/>
-            <Button Content="2" Style="{StaticResource NumButton}"/>
-            <Button Content="3" Style="{StaticResource NumButton}"/>
-            <Button Content="+" Style="{StaticResource OperationButton}"/>
+            <Button Content="1" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=OneButton}"/>
+            <Button Content="2" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=TwoButton}"/>
+            <Button Content="3" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=ThreeButton}"/>
+            <Button Content="+" 
+                    Style="{StaticResource OperationButton}"/>
 
-            <Button Content="±" Style="{StaticResource NumButton}"/>
-            <Button Content="0" Style="{StaticResource NumButton}"/>
-            <Button Content="," Style="{StaticResource NumButton}"/>
-            <Button Content="=" Style="{StaticResource OperationButton}"/>
+            <Button Content="±" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=ChangeSignButton}"/>
+            <Button Content="0" 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=ZeroButton}"/>
+            <Button Content="," 
+                    Style="{StaticResource NumButton}"
+                    Command="{Binding Path=CommaButton}"/>
+            <Button Content="=" 
+                    Style="{StaticResource OperationButton}"
+                    Command="{Binding Path=CalculateButton}"/>
         </UniformGrid>
     </Grid>
 </Window>

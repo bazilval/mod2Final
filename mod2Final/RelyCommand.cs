@@ -10,7 +10,6 @@ namespace mod2Final
     class RelyCommand : ICommand
     {
         private readonly Action<object> execute;
-        private readonly Func<object, bool> canExecute;
 
         public event EventHandler CanExecuteChanged
         {
@@ -18,15 +17,14 @@ namespace mod2Final
             remove => CommandManager.RequerySuggested -= value;
         }
 
-        public RelyCommand(Action<object> Execute, Func<object, bool> CanExecute = null)
+        public RelyCommand(Action<object> Execute)
         {
             this.execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
-            this.canExecute = CanExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            return canExecute?.Invoke(parameter) ?? true;
+            return true;
         }
 
         public void Execute(object parameter)
