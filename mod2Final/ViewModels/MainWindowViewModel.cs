@@ -12,12 +12,14 @@ namespace mod2Final.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        // Реализация интерфейса INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
             PropertyChanged.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
 
+        #region [Объявление свойств]
         // Свойство, хранящее состояние поля ввода
         private string field;
         public string Field
@@ -25,8 +27,14 @@ namespace mod2Final.ViewModels
             get => field;
             set
             {
+                /*
+                if (value == "" || value == null)
+                {
+                    field = "0";
+                }*/
                 field = value;
                 OnPropertyChanged();
+
             }
         }
 
@@ -83,136 +91,275 @@ namespace mod2Final.ViewModels
                 OnPropertyChanged();
             }
         }
+        #endregion
 
-        // Инициация команд для ввода значений в поле
+        #region [Объявление команд для ввода значений в поле]
 
         public ICommand OneButton { get; }
         private void OnOneButtonExecute(object p)
         {
-            Calculator.InputSymbol("1");
+            InputSymbol("1");
         }
 
         public ICommand TwoButton { get; }
         private void OnTwoButtonExecute(object p)
         {
-            Calculator.InputSymbol("2");
+            InputSymbol("2");
         }
 
         public ICommand ThreeButton { get; }
         private void OnThreeButtonExecute(object p)
         {
-            Calculator.InputSymbol("3");
+            InputSymbol("3");
         }
 
         public ICommand FourButton { get; }
         private void OnFourButtonExecute(object p)
         {
-            Calculator.InputSymbol("4");
+            InputSymbol("4");
         }
 
         public ICommand FiveButton { get; }
         private void OnFiveButtonExecute(object p)
         {
-            Calculator.InputSymbol("5");
+            InputSymbol("5");
         }
 
         public ICommand SixButton { get; }
         private void OnSixButtonExecute(object p)
         {
-            Calculator.InputSymbol("6");
+            InputSymbol("6");
         }
 
         public ICommand SevenButton { get; }
         private void OnSevenButtonExecute(object p)
         {
-            Calculator.InputSymbol("7");
+            InputSymbol("7");
         }
 
         public ICommand EightButton { get; }
         private void OnEightButtonExecute(object p)
         {
-            Calculator.InputSymbol("8");
+            InputSymbol("8");
         }
 
         public ICommand NineButton { get; }
         private void OnNineButtonExecute(object p)
         {
-            Calculator.InputSymbol("9");
+            InputSymbol("9");
         }
 
         public ICommand ZeroButton { get; }
         private void OnZeroButtonExecute(object p)
         {
-            Calculator.InputSymbol("0");
+            InputSymbol("0");
         }
 
         public ICommand CommaButton { get; }
         private void OnCommaButtonExecute(object p)
         {
-            Calculator.InputSymbol(",");
-        }
-
-        // Инициация команд для расчёта
-
-        public ICommand PlusButton { get; }
-        private void OnPlusButtonExecute(object p)
-        {
-            Calculator.Input(Operations.Plus);
-        }
-
-        public ICommand MinusButton { get; }
-        private void OnMinusButtonExecute(object p)
-        {
-            Calculator.Input(Operations.Minus);
-        }
-
-        public ICommand DivideButton { get; }
-        private void OnDivideButtonExecute(object p)
-        {
-            Calculator.Input(Operations.Divide);
-        }
-
-        public ICommand MultiplyButton { get; }
-        private void OnMultiplyButtonExecute(object p)
-        {
-            Calculator.Input(Operations.Multiply);
+            InputSymbol(",");
         }
 
         public ICommand BackspaceButton { get; }
         private void OnBackspaceButtonExecute(object p)
         {
-            Calculator.Backspace();
-        }
-
-        public ICommand ClearButton { get; }
-        private void OnClearButtonExecute(object p)
-        {
-            Calculator.Clear();
+            Backspace();
         }
 
         public ICommand CleanEntryButton { get; }
         private void OnCleanEntryButtonExecute(object p)
         {
-            Calculator.CleanEntry();
+            CleanEntry();
         }
 
         public ICommand ChangeSignButton { get; }
         private void OnChangeSignButtonExecute(object p)
         {
-            Calculator.ChangeSign();
+            ChangeSign();
         }
 
+        #endregion
 
-        public ICommand CalculateButton { get; }
-        private void OnCalculateButtonExecute(object p)
+        #region [Объявление команд для расчёта]
+
+        public ICommand ClearButton { get; }
+        private void OnClearButtonExecute(object p)
         {
-            Calculator.Calculate();
+            Clear();
         }
 
+        public ICommand PlusButton { get; }
+        private void OnPlusButtonExecute(object p)
+        {
+            Input(Operations.Plus);
+        }
+
+        public ICommand MinusButton { get; }
+        private void OnMinusButtonExecute(object p)
+        {
+            Input(Operations.Minus);
+        }
+
+        public ICommand DivideButton { get; }
+        private void OnDivideButtonExecute(object p)
+        {
+            Input(Operations.Divide);
+        }
+
+        public ICommand MultiplyButton { get; }
+        private void OnMultiplyButtonExecute(object p)
+        {
+            Input(Operations.Multiply);
+        }
+
+        public ICommand EqualButton { get; }
+        private void OnEqualButtonExecute(object p)
+        {
+            Equal();
+        }
+
+        #endregion
+
+        #region [Методы калькулятора]
+
+        // Метод установки символа в строку ввода
+        void InputSymbol(string symbol)
+        {
+            if (OperationField.Contains("="))
+            {
+                Clear();
+                if (symbol != ",")
+                {
+                    Field = symbol;
+                }
+                else
+                {
+                    Field += symbol;
+                }
+                
+            }
+            else if (Field == "0" && symbol != ",")
+            {
+                Field = symbol;
+            }
+            else if (Field.Contains(",") && symbol == ",")
+            {
+                return;
+            }
+            
+            else
+            {
+                Field += symbol;
+            }
+        }
+
+        // Метод удаления последнего символа в строке ввода
+        void Backspace()
+        {
+            if (Field.Length == 1 ||
+               (Field.Length == 2 && Field.Substring(0, 1) == "-"))
+            {
+                Field = "0";
+            }
+            else
+            {
+                Field = Field.Remove(Field.Length - 1);
+            }
+        }
+
+        // Метод очистки поля ввода
+
+        void CleanEntry()
+        {
+            Field = "0";
+        }
+
+        // Метод смены знака введенного значения
+
+        void ChangeSign()
+        {
+            if (Field != "0")
+            {
+                if (Field.Substring(0, 1) == "-")
+                {
+                    Field = Field.Remove(0, 1);
+                }
+                else
+                {
+                    Field = "-" + Field;
+                }
+            }
+        }
+
+        // Метод очистки всех введённых данных калькулятора
+
+        void Clear()
+        {
+            Operand1 = 0;
+            Operand2 = 0;
+            Field = "0";
+            Operation = Operations.Empty;
+            OperationField = "";
+        }
+
+        // Метод ввода операции и первого операнда
+
+        void Input(Operations operation)
+        {
+            string result;
+            string opSign = "";
+            switch (operation)
+            {
+                case Operations.Empty:
+                    return;
+                case Operations.Plus:
+                    opSign = "+";
+                    break;
+                case Operations.Minus:
+                    opSign = "-";
+                    break;
+                case Operations.Divide:
+                    opSign = "/";
+                    break;
+                case Operations.Multiply:
+                    opSign = "x";
+                    break;
+            }
+
+            if (Operation != Operations.Empty)
+            {
+                result = Calculator.Calculate(Operand1, double.Parse(Field), Operation);
+                Operand1 = result != "Нельзя" ? double.Parse(result) : 0;
+            }
+            else
+            {
+                Operand1 = double.Parse(Field);
+            }
+
+            OperationField = $"{Operand1} {opSign}";
+            Operation = operation;
+            CleanEntry();
+        }
+
+        // Метод подсчёта конечного результата
+
+        void Equal()
+        {
+            Operand2 = double.Parse(Field);
+            OperationField += $" {Operand2} =";
+            Field = Calculator.Calculate(Operand1, Operand2, Operation);
+            Operation = Operations.Empty;
+        }
+
+        #endregion
 
         // Конструктор окна
         public MainWindowViewModel()
         {
+            field = "0";
+            operationField = "";
+
             OneButton = new RelyCommand(OnOneButtonExecute);
             TwoButton = new RelyCommand(OnTwoButtonExecute);
             ThreeButton = new RelyCommand(OnThreeButtonExecute);
@@ -224,16 +371,17 @@ namespace mod2Final.ViewModels
             NineButton = new RelyCommand(OnNineButtonExecute);
             ZeroButton = new RelyCommand(OnZeroButtonExecute);
 
-            PlusButton = new RelyCommand(OnPlusButtonExecute);
-            PlusButton = new RelyCommand(OnMinusButtonExecute);
-            PlusButton = new RelyCommand(OnDivideButtonExecute);
-            PlusButton = new RelyCommand(OnMultiplyButtonExecute);
-            PlusButton = new RelyCommand(OnBackspaceButtonExecute);
-            ClearButton = new RelyCommand(OnClearButtonExecute);
+            BackspaceButton = new RelyCommand(OnBackspaceButtonExecute);
             CleanEntryButton = new RelyCommand(OnCleanEntryButtonExecute);
             ChangeSignButton = new RelyCommand(OnChangeSignButtonExecute);
             CommaButton = new RelyCommand(OnCommaButtonExecute);
-            CalculateButton = new RelyCommand(OnCalculateButtonExecute);
+
+            PlusButton = new RelyCommand(OnPlusButtonExecute);
+            MinusButton = new RelyCommand(OnMinusButtonExecute);
+            DivideButton = new RelyCommand(OnDivideButtonExecute);
+            MultiplyButton = new RelyCommand(OnMultiplyButtonExecute);
+            ClearButton = new RelyCommand(OnClearButtonExecute);
+            EqualButton = new RelyCommand(OnEqualButtonExecute);
         }
     }
 }
