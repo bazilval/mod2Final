@@ -11,18 +11,43 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding OneButton}" Gesture="NumPad1"/>
+        <KeyBinding Command="{Binding TwoButton}" Gesture="NumPad2"/>
+        <KeyBinding Command="{Binding ThreeButton}" Gesture="NumPad3"/>
+        <KeyBinding Command="{Binding FourButton}" Gesture="NumPad4"/>
+        <KeyBinding Command="{Binding FiveButton}" Gesture="NumPad5"/>
+        <KeyBinding Command="{Binding SixButton}" Gesture="NumPad6"/>
+        <KeyBinding Command="{Binding SevenButton}" Gesture="NumPad7"/>
+        <KeyBinding Command="{Binding EightButton}" Gesture="NumPad8"/>
+        <KeyBinding Command="{Binding NineButton}" Gesture="NumPad9"/>
+        <KeyBinding Command="{Binding ZeroButton}" Gesture="NumPad0"/>
+        <KeyBinding Command="{Binding CommaButton}" Key="Decimal"/>
+
+        <KeyBinding Command="{Binding BackspaceButton}" Gesture="Backspace"/>
+        <KeyBinding Command="{Binding MultiplyButton}" Key="Multiply"/>
+        <KeyBinding Command="{Binding DivideButton}" Key="Divide"/>
+        <KeyBinding Command="{Binding MinusButton}" Key="Subtract"/>
+        <KeyBinding Command="{Binding PlusButton}" Key="Add"/>
+        <KeyBinding Command="{Binding EqualButton}" Gesture="Enter"/>
+        <KeyBinding Command="{Binding ClearButton}" Gesture="Esc"/>
+        <KeyBinding Command="{Binding CleanEntryButton}" Gesture="Delete"/>
+
+    </Window.InputBindings>
     <Grid Background="#FF1F1F1F">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="15*"/>
             <RowDefinition Height="35*"/>
             <RowDefinition Height="145*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Path=OperationField}"
+        <TextBox Text="{Binding Path=OperationField}"
                    Grid.Row="0" 
-                   Style="{StaticResource OperationBox}"/>
+                   Style="{StaticResource OperationBox}"
+                   IsReadOnly="True"/>
         <TextBox Text="{Binding Path=Field}"
                  Grid.Row="1" 
-                 Style="{StaticResource NumBox}"/>
+                 Style="{StaticResource NumBox}"
+                 IsReadOnly="True"/>
         <UniformGrid Grid.Row="2" Columns="4" Rows="5" Margin="2">
             <Button Content="CE" 
                     Style="{StaticResource OperationButton}"

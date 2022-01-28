@@ -226,6 +226,11 @@ namespace mod2Final.ViewModels
         // Метод установки символа в строку ввода
         void InputSymbol(string symbol)
         {
+            if (Field.Replace(" ", "").Replace(",","").Replace("-","").Length >= 15)
+            {
+                return;
+            }
+
             if (OperationField.Contains("="))
             {
                 Clear();
@@ -247,24 +252,42 @@ namespace mod2Final.ViewModels
             {
                 return;
             }
-            
+            else if (symbol == ",")
+            {
+                Field += symbol;
+            }
             else
             {
                 Field += symbol;
+                Field = Calculator.Format(Field,false);
             }
         }
 
         // Метод удаления последнего символа в строке ввода
         void Backspace()
         {
+            if (Field=="Нельзя")
+            {
+                Clear();
+                return;
+            }
             if (Field.Length == 1 ||
                (Field.Length == 2 && Field.Substring(0, 1) == "-"))
             {
                 Field = "0";
+                return;
             }
+            
             else
             {
-                Field = Field.Remove(Field.Length - 1);
+                Field = Calculator.Format(Field.Remove(Field.Length - 1),false);
+            }
+
+            if (OperationField.Contains("="))
+            {
+                string temp = Field;
+                Clear();
+                Field = temp;
             }
         }
 
@@ -272,6 +295,11 @@ namespace mod2Final.ViewModels
 
         void CleanEntry()
         {
+            if (OperationField.Contains("="))
+            {
+                Clear();
+            }
+
             Field = "0";
         }
 
@@ -279,17 +307,7 @@ namespace mod2Final.ViewModels
 
         void ChangeSign()
         {
-            if (Field != "0")
-            {
-                if (Field.Substring(0, 1) == "-")
-                {
-                    Field = Field.Remove(0, 1);
-                }
-                else
-                {
-                    Field = "-" + Field;
-                }
-            }
+            Field = Calculator.Format(Field, true);
         }
 
         // Метод очистки всех введённых данных калькулятора
@@ -307,6 +325,12 @@ namespace mod2Final.ViewModels
 
         void Input(Operations operation)
         {
+            if (Field == "Нельзя")
+            {
+                Clear();
+                return;
+            }
+
             string result;
             string opSign = "";
             switch (operation)
@@ -337,7 +361,7 @@ namespace mod2Final.ViewModels
                 Operand1 = double.Parse(Field);
             }
 
-            OperationField = $"{Operand1} {opSign}";
+            OperationField = Calculator.Format($"{Operand1}",false) + $" {opSign}";
             Operation = operation;
             CleanEntry();
         }
@@ -346,8 +370,18 @@ namespace mod2Final.ViewModels
 
         void Equal()
         {
+            if (Field == "Нельзя")
+            {
+                Clear();
+                return;
+            }
+            if (Operation==Operations.Empty)
+            {
+                return;
+            }
+
             Operand2 = double.Parse(Field);
-            OperationField += $" {Operand2} =";
+            OperationField += " " + Calculator.Format($"{Operand2}",false) + " =";
             Field = Calculator.Calculate(Operand1, Operand2, Operation);
             Operation = Operations.Empty;
         }
